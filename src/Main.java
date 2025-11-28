@@ -1,8 +1,2 @@
-import app.TravelApp;
-
-public class Main {
-    public static void main(String[] args) {
-        TravelApp app = new TravelApp();
-        app.run();
-    }
-}
+// file intentionally left blank to avoid duplicate Main class
+// The real application entry point is in src/app/Main.java (package app)

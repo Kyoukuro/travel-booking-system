@@ -2,17 +2,16 @@ package app;
 
 import entities.Flight;
 import entities.Hotel;
-import reservations.Reservation;
-import reservations.FlightReservation;
-import reservations.HotelReservation;
 import exceptions.ReservationNotFoundException;
-import utils.ConfirmationGenerator;
-
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+import reservations.FlightReservation;
+import reservations.HotelReservation;
+import reservations.Reservation;
+import utils.ConfirmationGenerator;
 
 public class TravelApp {
     private final ArrayList<Flight> flights = new ArrayList<>();
@@ -67,6 +66,20 @@ public class TravelApp {
         }
     }
 
+    /**
+     * Clean up resources used by the app (e.g., Scanner).
+     * Safe to call multiple times.
+     */
+    public void shutdown() {
+        try {
+            if (scanner != null) {
+                scanner.close();
+            }
+        } catch (Exception ignored) {
+            // closing System.in can cause issues in some environments, but this is best-effort cleanup
+        }
+    }
+
     private int safeNextInt() {
         while (true) {
             try {
@@ -112,7 +125,7 @@ public class TravelApp {
         System.out.print("Lokasi (kota): ");
         String loc = scanner.nextLine().trim();
         System.out.print("Tanggal check-in (YYYY-MM-DD) [opsional]: ");
-        String checkIn = scanner.nextLine().trim();
+        scanner.nextLine().trim();
         System.out.print("Tanggal check-out (YYYY-MM-DD) [opsional]: ");
         String checkOut = scanner.nextLine().trim();
         System.out.print("Jumlah tamu: ");
