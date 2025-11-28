@@ -1,11 +1,11 @@
 package entities;
 
 public class Hotel {
-    private String id;
-    private String name;
-    private String location;
-    private double pricePerNight;
-    private int capacity = 100; // default capacity, simple model
+    private final String id;
+    private final String name;
+    private final String location;
+    private final double pricePerNight;
+    private final int capacity = 100; // default capacity
 
     public Hotel(String id, String name, String location, double pricePerNight) {
         this.id = id;
@@ -14,14 +14,31 @@ public class Hotel {
         this.pricePerNight = pricePerNight;
     }
 
-    public String getId() { return id; }
-    public String getName() { return name; }
-    public String getLocation() { return location; }
-    public double getPricePerNight() { return pricePerNight; }
-    public int getCapacity() { return capacity; }
+    public String getId() { 
+        return id; 
+    }
+
+    public String getName() { 
+        return name; 
+    }
+
+    public String getLocation() { 
+        return location; 
+    }
+
+    public double getPricePerNight() { 
+        return pricePerNight; 
+    }
+
+    public int getCapacity() { 
+        return capacity; 
+    }
 
     @Override
     public String toString() {
-        return "%s | %s | %s | Rp%.0f /night".formatted(id, name, location, pricePerNight);
+        return String.format(
+            "%s | %s | %s | Rp%.0f /night | Capacity: %d",
+            id, name, location, pricePerNight, capacity
+        );
     }
 }

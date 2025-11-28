@@ -1,12 +1,12 @@
 package entities;
 
 public class Flight {
-    private String flightNumber;
-    private String origin;
-    private String destination;
-    private String date;
+    private final String flightNumber;
+    private final String origin;
+    private final String destination;
+    private final String date;
     private int seats;
-    private double price;
+    private final double price;
 
     public Flight(String flightNumber, String origin, String destination, String date, int seats, double price) {
         this.flightNumber = flightNumber;

@@ -1,13 +1,14 @@
 package app;
 
-import entities.Flight;
-import entities.Hotel;
-import exceptions.ReservationNotFoundException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+
+import entities.Flight;
+import entities.Hotel;
+import exceptions.ReservationNotFoundException;
 import reservations.FlightReservation;
 import reservations.HotelReservation;
 import reservations.Reservation;
@@ -120,30 +121,27 @@ public class TravelApp {
         results.forEach(System.out::println);
     }
 
-    private void searchHotelsFlow() {
-        System.out.println("\n--- Cari Hotel ---");
-        System.out.print("Lokasi (kota): ");
-        String loc = scanner.nextLine().trim();
-        System.out.print("Tanggal check-in (YYYY-MM-DD) [opsional]: ");
-        scanner.nextLine().trim();
-        System.out.print("Tanggal check-out (YYYY-MM-DD) [opsional]: ");
-        String checkOut = scanner.nextLine().trim();
-        System.out.print("Jumlah tamu: ");
-        int guests = safeNextInt();
+private void searchHotelsFlow() {
+    System.out.println("\n--- Cari Hotel ---");
+    System.out.print("Lokasi (kota): ");
+    String loc = scanner.nextLine().trim();
+    System.out.print("Jumlah tamu: ");
+    int guests = safeNextInt();
 
-        List<Hotel> results = hotels.stream()
-                .filter(h -> h.getLocation().equalsIgnoreCase(loc))
-                .filter(h -> h.getCapacity() >= guests)
-                .collect(Collectors.toList());
+    var results = hotels.stream()
+            .filter(h -> h.getLocation().equalsIgnoreCase(loc))
+            .filter(h -> h.getCapacity() >= guests)
+            .toList();
 
-        if (results.isEmpty()) {
-            System.out.println("Tidak ada hotel tersedia pada lokasi tersebut.");
-            return;
-        }
-
-        System.out.println("Hasil pencarian:");
-        results.forEach(System.out::println);
+    if (results.isEmpty()) {
+        System.out.println("Tidak ada hotel tersedia pada lokasi tersebut.");
+        return;
     }
+
+    System.out.println("Hasil pencarian:");
+    results.forEach(System.out::println);
+}
+
 
     private void bookFlightFlow() {
         System.out.println("\n--- Pesan Penerbangan ---");
@@ -237,28 +235,30 @@ public class TravelApp {
         }
     }
 
-    private void cancelReservation(int conf) throws ReservationNotFoundException {
-        // find reservation by confirmation number
-        Reservation found = reservations.stream()
-                .filter(r -> r.getConfirmationNumber() == conf)
-                .findFirst()
-                .orElse(null);
+private void cancelReservation(int conf) throws ReservationNotFoundException {
+    Reservation found = reservations.stream()
+            .filter(r -> r.getConfirmationNumber() == conf)
+            .findFirst()
+            .orElse(null);
 
-        if (found == null) throw new ReservationNotFoundException("Reservasi dengan nomor " + conf + " tidak ditemukan.");
-
-        // pattern matching for instanceof (Java 16+)
-        if (found instanceof FlightReservation fr) {
-            // restore seats
-            Flight f = fr.getFlight();
-            f.setSeats(f.getSeats() + fr.getPassengerCount());
-            System.out.println("Membatalkan FlightReservation: mengembalikan " + fr.getPassengerCount() + " kursi ke penerbangan " + f.getFlightNumber());
-        } else if (found instanceof HotelReservation hr) {
-            System.out.println("Membatalkan HotelReservation: " + hr.getHotel().getName());
-            // no extra action for hotel in this simple model
-        }
-
-        reservations.remove(found);
+    if (found == null) {
+        throw new ReservationNotFoundException("Reservasi dengan nomor " + conf + " tidak ditemukan.");
     }
+
+    if (found instanceof FlightReservation fr) {
+        Flight f = fr.getFlight();
+        f.setSeats(f.getSeats() + fr.getPassengerCount());
+        System.out.println("Membatalkan FlightReservation: mengembalikan "
+                + fr.getPassengerCount() + " kursi ke penerbangan " + f.getFlightNumber());
+    } else if (found instanceof HotelReservation hr) {
+        System.out.println("Membatalkan HotelReservation: " + hr.getHotel().getName());
+    } else {
+        System.out.println("Tipe reservasi tidak dikenal.");
+    }
+
+    reservations.remove(found);
+    System.out.println("Pembatalan berhasil untuk konfirmasi: " + conf);
+}
 
     private void listReservations() {
         System.out.println("\n--- Semua Reservasi ---");

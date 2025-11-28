@@ -8,12 +8,9 @@
     <version>0.1.0-SNAPSHOT</version>
 
     <!-- Start from Java 8 (project appears to be Java 8) -->
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <!-- Current code uses features (sealed, pattern matching, switch arrows) that require Java 17+ -->
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-    </properties>
+<properties>
+    <maven.compiler.release>17</maven.compiler.release>
+</properties>
 
     <build>
         <!-- project sources are in src/ (flat layout in this repo) -->
