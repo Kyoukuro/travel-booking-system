@@ -22,6 +22,6 @@ public class Hotel {
 
     @Override
     public String toString() {
-        return String.format("%s | %s | %s | Rp%.0f /night", id, name, location, pricePerNight);
+        return "%s | %s | %s | Rp%.0f /night".formatted(id, name, location, pricePerNight);
     }
 }

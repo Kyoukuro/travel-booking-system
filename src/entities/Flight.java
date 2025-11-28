@@ -4,7 +4,7 @@ public class Flight {
     private String flightNumber;
     private String origin;
     private String destination;
-    private String date; // YYYY-MM-DD (simple)
+    private String date;
     private int seats;
     private double price;
 
@@ -28,7 +28,8 @@ public class Flight {
 
     @Override
     public String toString() {
-        return String.format("%s | %s -> %s | %s | seats: %d | Rp%.0f",
+        return "%s | %s -> %s | %s | seats: %d | Rp%.0f".formatted(
                 flightNumber, origin, destination, date, seats, price);
     }
 }
+
