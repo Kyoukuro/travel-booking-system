@@ -15,9 +15,10 @@ import reservations.Reservation;
 import utils.ConfirmationGenerator;
 
 public class TravelApp {
-    private final ArrayList<Flight> flights = new ArrayList<>();
-    private final ArrayList<Hotel> hotels = new ArrayList<>();
-    private final ArrayList<Reservation> reservations = new ArrayList<>();
+    // Use the List interface for fields to keep implementation details private
+    private final List<Flight> flights = new ArrayList<>();
+    private final List<Hotel> hotels = new ArrayList<>();
+    private final List<Reservation> reservations = new ArrayList<>();
 
     private final Scanner scanner = new Scanner(System.in);
 
@@ -67,10 +68,6 @@ public class TravelApp {
         }
     }
 
-    /**
-     * Clean up resources used by the app (e.g., Scanner).
-     * Safe to call multiple times.
-     */
     public void shutdown() {
         try {
             if (scanner != null) {
@@ -242,19 +239,23 @@ private void cancelReservation(int conf) throws ReservationNotFoundException {
             .orElse(null);
 
     if (found == null) {
-        throw new ReservationNotFoundException("Reservasi dengan nomor " + conf + " tidak ditemukan.");
+        throw new ReservationNotFoundException(
+            "Reservasi dengan nomor " + conf + " tidak ditemukan."
+        );
     }
+if (found instanceof FlightReservation fr) {
+    Flight f = fr.getFlight();
+    f.setSeats(f.getSeats() + fr.getPassengerCount());
+    System.out.println("Membatalkan FlightReservation: mengembalikan "
+            + fr.getPassengerCount() + " kursi ke penerbangan " + f.getFlightNumber());
+}
+else if (found instanceof HotelReservation hr) {
+    System.out.println("Membatalkan HotelReservation: " + hr.getHotel().getName());
+}
+else {
+    System.out.println("Jenis reservasi tidak dikenal.");
+}
 
-    if (found instanceof FlightReservation fr) {
-        Flight f = fr.getFlight();
-        f.setSeats(f.getSeats() + fr.getPassengerCount());
-        System.out.println("Membatalkan FlightReservation: mengembalikan "
-                + fr.getPassengerCount() + " kursi ke penerbangan " + f.getFlightNumber());
-    } else if (found instanceof HotelReservation hr) {
-        System.out.println("Membatalkan HotelReservation: " + hr.getHotel().getName());
-    } else {
-        System.out.println("Tipe reservasi tidak dikenal.");
-    }
 
     reservations.remove(found);
     System.out.println("Pembatalan berhasil untuk konfirmasi: " + conf);

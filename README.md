@@ -1,33 +1,60 @@
-# Travel Booking System
+Travel Booking System – Java Console App
 
-This is a simple console-based travel booking example.
+Aplikasi console sederhana untuk melakukan pemesanan perjalanan.
+Fitur mencakup pencarian penerbangan, pencarian hotel, pemesanan, pembatalan, dan melihat daftar reservasi.
 
-## How to run quickly (Windows PowerShell)
+Cara Menjalankan
+1. Pastikan JDK sudah terinstall
 
-1. Ensure you have a JDK installed and both `javac` and `java` are on your PATH.
-2. From repository root, run:
+Cek:
+javac -version
 
-```powershell
-.\run.ps1
-```
+2. Jalankan script otomatis (Windows PowerShell)
+./run.ps1
 
-## How to run on Linux/macOS
+Script ini akan:
+meng-compile semua file .java
+menyimpan hasil compile ke folder out/
+menjalankan aplikasi secara otomatis
 
-```bash
-./run.sh
-```
 
-## Build with Maven
+Struktur Project
+src/
+│
+├── Main.java
+├── app/
+│   └── TravelApp.java
+│
+├── entities/
+│   ├── Flight.java
+│   ├── Hotel.java
+│
+├── reservations/
+│   ├── Reservation.java
+│   ├── FlightReservation.java
+│   ├── HotelReservation.java
+│
+├── utils/
+│   ├── FlightLoader.java
+│   └── HotelLoader.java
+│
+└── exceptions/
+    └── ReservationNotFoundException.java
 
-If you have Maven installed you can package an executable JAR (requires Java on PATH):
+Fitur Utama
+Cari Penerbangan berdasarkan destinasi, tanggal, atau semua penerbangan
+Cari Hotel berdasarkan lokasi atau semua hotel
+Pesan Penerbangan (dengan pengurangan kursi otomatis)
+Pesan Hotel
+Batalkan Reservasi (kursi kembali ditambah untuk flight)
+Lihat Semua Reservasi
+Input aman (menggunakan safeNextInt untuk mencegah error input)
 
-```powershell
-mvn clean package
-java -jar target\travel-booking-system-0.1.0-SNAPSHOT-shaded.jar
-```
+Teknologi
+Java (tanpa framework)
+OOP (class: Flight, Hotel, Reservation, dll.)
+Exception handling
+Clean console UI
 
-Or run with Maven directly:
-
-```powershell
-mvn -Dexec.mainClass=Main exec:java
-```
+Author
+Matthew Jonathan Syauta
