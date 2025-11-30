@@ -57,4 +57,8 @@ Exception handling
 Clean console UI
 
 Author
-Matthew Jonathan Syauta
+Matthew Jonathan Syauta - 2802523603
+Denis Himawan Yuwono - 2802517790
+Firnanda Michael Putra Ganiezha - 2802552995
+Carina Fadillah Afrianto - 2802516705
+Muhammad Ghifari Naufal Fadhlurrohman - 2802548700
